@@ -44,12 +44,16 @@ public class FunnyAlgorithms {
      *
      * @param array Array to be sorted
      * @param order Direction to sort the array (0:Descending, 1:Ascending)
+     * @throws IllegalArgumentException when order is neither 0 nor 1,
+     * or when array length is lower than 2
      */
     public void selectionSort(int[] array, int order) throws IllegalArgumentException {
 
         if (order != 0 && order != 1) {
             throw new IllegalArgumentException("L'ordine può essere 0 o 1.");
         }
+        if (array.length < 2)
+            throw new IllegalArgumentException("L'array deve contenenre almeno 2 elementi");
 
         for (int i = 0; i < array.length - 1; i++) {
             int min = i;
