@@ -1,6 +1,9 @@
 package it.mat.unical.ingsw2022;
 
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class FunnyAlgorithms {
 
     /**
@@ -40,15 +43,19 @@ public class FunnyAlgorithms {
      * Traditional Selection Sort
      *
      * @param array Array to be sorted
-     * @param order Direction to sort the array (0:Ascending, 1:Descending)
+     * @param order Direction to sort the array (0:Descending, 1:Ascending)
+     * @throws IllegalArgumentException when order is neither 0 nor 1,
+     * or when array length is lower than 2
      */
-    public void selectionSort(int[] array, int order) {
+    public void selectionSort(int[] array, int order) throws IllegalArgumentException {
 
         if (order != 0 && order != 1) {
             throw new IllegalArgumentException("L'ordine può essere 0 o 1.");
         }
+        if (array.length < 2)
+            throw new IllegalArgumentException("L'array deve contenenre almeno 2 elementi");
 
-        for (int i = 0; i < array.length - 2; i++) {
+        for (int i = 0; i < array.length - 1; i++) {
             int min = i;
             for (int j = i + 1; j < array.length; j++) {
                 boolean orderCondition = order == 0 ? array[j] > array[min] : array[j] < array[min];
@@ -70,8 +77,25 @@ public class FunnyAlgorithms {
      * @return
      * @throws UnsupportedOperationException
      */
-    public int stringToIntConverter(String number) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException();
+    public int stringToIntConverter(String number) throws IllegalArgumentException {
+
+        if (number.contains(".") || number.contains(" "))
+            throw new IllegalArgumentException("Invalid string");
+
+        // Le stringhe ben formate non contengono caratteri diversi da numeri, spazi finali e meno
+        // Non sono ammessi numeri reali
+        Pattern pattern = Pattern.compile("[a-zA-Z]");
+        Matcher matcher = pattern.matcher(number);
+        if(matcher.find())
+            throw new IllegalArgumentException("Invalid string");
+
+        int intNumber = Integer.parseInt(number);
+
+        // Il numero rappresentato deve essere compreso nell'intervallo [-32768, 32767], eccezione in caso contrario
+        if (intNumber < -32768 || intNumber > 32767)
+            throw new IllegalArgumentException("The number you want to convert is out of range");
+
+        return intNumber;
     }
 
 }
