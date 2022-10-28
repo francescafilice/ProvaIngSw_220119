@@ -1,6 +1,9 @@
 package it.mat.unical.ingsw2022;
 
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class FunnyAlgorithms {
 
     /**
@@ -70,8 +73,25 @@ public class FunnyAlgorithms {
      * @return
      * @throws UnsupportedOperationException
      */
-    public int stringToIntConverter(String number) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException();
+    public int stringToIntConverter(String number) throws IllegalArgumentException {
+
+        if (number.contains(".") || number.contains(" "))
+            throw new IllegalArgumentException("Invalid string");
+
+        // Le stringhe ben formate non contengono caratteri diversi da numeri, spazi finali e meno
+        // Non sono ammessi numeri reali
+        Pattern pattern = Pattern.compile("[a-zA-Z]");
+        Matcher matcher = pattern.matcher(number);
+        if(matcher.find())
+            throw new IllegalArgumentException("Invalid string");
+
+        int intNumber = Integer.parseInt(number);
+
+        // Il numero rappresentato deve essere compreso nell'intervallo [-32768, 32767], eccezione in caso contrario
+        if (intNumber < -32768 || intNumber > 32767)
+            throw new IllegalArgumentException("The number you want to convert is out of range");
+
+        return intNumber;
     }
 
 }
