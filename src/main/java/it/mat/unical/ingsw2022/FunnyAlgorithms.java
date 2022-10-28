@@ -43,9 +43,9 @@ public class FunnyAlgorithms {
      * Traditional Selection Sort
      *
      * @param array Array to be sorted
-     * @param order Direction to sort the array (0:Ascending, 1:Descending)
+     * @param order Direction to sort the array (0:Descending, 1:Ascending)
      */
-    public void selectionSort(int[] array, int order) {
+    public void selectionSort(int[] array, int order) throws IllegalArgumentException {
 
         if (order != 0 && order != 1) {
             throw new IllegalArgumentException("L'ordine può essere 0 o 1.");
